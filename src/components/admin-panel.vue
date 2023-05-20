@@ -32,6 +32,38 @@ export default {
     const rows = ref([
       { id: 1, Column1: "Value1", Column2: "Value2", Column3: "Value3" },
       { id: 2, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 3, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 4, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 5, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 6, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 7, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 8, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 9, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 10, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 11, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 12, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 13, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 14, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 15, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 16, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 17, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 18, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 19, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 20, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 21, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 22, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 23, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 24, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 25, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 26, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 27, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 28, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 29, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 30, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 31, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 32, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+      { id: 33, Column1: "Value4", Column2: "Value5", Column3: "Value6" },
+
     ]);
 
     const highlightedRowId = ref(null);
@@ -40,12 +72,10 @@ export default {
       // Действие, которое нужно выполнить при двойном клике на строку
       console.log(row);
 
-      // Изменить значение highlightedRowId на id строки
       highlightedRowId.value = row.id;
     };
 
     const handleOutsideClick = (event) => {
-      // Проверить, был ли клик на выделенной строке
       const isClickedOnHighlightedRow = event.target.closest(".highlighted");
 
       // Если клик был вне выделенной строки, снять выделение
@@ -73,7 +103,7 @@ export default {
 
 <style lang="scss" scoped>
 .admin-panel {
-  margin-top: 45px;
+  margin-top: 20px;
   padding: 0 20px;
 
   &__buttons {
@@ -92,6 +122,9 @@ export default {
   &__table {
     margin-top: 45px;
     background: white;
+    position: relative;
+    max-height: 450px;
+    overflow-y: auto;
 
     table {
       width: 100%;
@@ -101,6 +134,7 @@ export default {
       td {
         padding: 5px 15px;
         border: 1px solid #000;
+        user-select: none;
       }
 
       th {
@@ -109,12 +143,18 @@ export default {
       }
 
       .highlighted {
-        outline: 2px solid red;
+        background: rgba(86, 108, 157, 0.5);
       }
 
       .centered {
         text-align: center;
       }
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
   }
 }
