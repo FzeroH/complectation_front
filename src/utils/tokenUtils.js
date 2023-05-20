@@ -17,9 +17,7 @@ export function isTokenValid (token) {
         return true;
     } catch (error) {
 
-        console.error('Invalid token:', error);
+        // console.error('Invalid token:', error);
         return true;
     }
-};
-
-export default isTokenValid;
+}
