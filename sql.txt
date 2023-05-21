@@ -1,0 +1,5 @@
+SELECT DISTINCT name_1 AS search FROM table
+UNION
+(SELECT DISTINCT name_2 FROM table)
+UNION
+(SELECT DISTINCT name_3 FROM table);

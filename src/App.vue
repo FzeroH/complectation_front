@@ -1,16 +1,26 @@
 <template>
-  <header-component />
-  <router-view />
+  <div v-if="userStore.hasUser" class="container">
+    <layout-header />
+    <LayoutBody>
+      <RouterView />
+    </LayoutBody>
+  </div>
+  <UserLogin v-else />
 </template>
 
-<script setup>
-import HeaderComponent from '@/components/header-component.vue';
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import LayoutHeader from '@/components/layout/LayoutHeader.vue'
+import LayoutBody from '@/components/layout/LayoutBody.vue'
+import UserLogin from '@/views/UserLogin.vue'
+
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
 </script>
 
-<style lang="scss">
-  @import "../public/normalize.css";
-  body {
-    background: #212633;
-  }
+<style lang="scss" scoped>
+.container {
+	max-width: 1200px;
+}
 </style>
-
