@@ -5,7 +5,8 @@ import { ListItem } from "@/types/ui";
 import getCompanyNames from "./mock/getCompanyNames";
 
 export class LibrarianApi extends Api {
-	static async getRequestList(): Promise<PublicationFullInfo[]> {
+	static async getRequestList(companyName: ListItem | null): Promise<PublicationFullInfo[]> {
+		// return await this.get('/price-list', companyName)
 		return await new Promise((resolve) => resolve(getAllOrders()));
 	}
 
@@ -13,7 +14,7 @@ export class LibrarianApi extends Api {
 		return await new Promise((resolve) => resolve(getAllOrders()));
 	}
 
-	static async getCompanyNames(): Promise<ListItem[] | null> {
+	static async getCompanyNames(): Promise<ListItem[]> {
 		return await new Promise((resolve) => resolve(getCompanyNames()));
 	}
 
