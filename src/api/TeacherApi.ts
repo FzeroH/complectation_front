@@ -1,4 +1,4 @@
-import { ListItem, TableItem } from '@/types/ui';
+import { ListItem, SortingItem, TableItem } from '@/types/ui';
 import { Api } from './Api';
 import getPublications from './mock/getPublications';
 import getPublication from './mock/getPublication';
@@ -10,9 +10,9 @@ import { PublicationFullInfo, RecOtherInfo } from '@/types';
 import getAllOrders from './mock/getAllOrders';
 
 export class TeacherApi extends Api {
-	static async getPublications(): Promise<TableItem[]> {
+	static async getPublications(sorting: SortingItem | null): Promise<TableItem[]> {
 		// TODO Убрать комментарий
-		// return await this.get('/publications') as Promise<TableItem[]>;
+		// return await this.get('/publications', sorting) as Promise<TableItem[]>;
 		return new Promise((resolve) => resolve(getPublications()))
 	}
 

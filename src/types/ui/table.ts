@@ -5,6 +5,7 @@ export type TableHeader = {
 	title: string;
 	type: 'string' | 'number';
 	name: string;
+	isSorting?: boolean;
 }
 
 export type AdminTableHeader = TableHeader & {

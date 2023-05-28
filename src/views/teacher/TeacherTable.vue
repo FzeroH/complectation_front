@@ -4,8 +4,7 @@
 	</div>
   <section v-else class="teacher-table">
     <header class="d-flex mb-3">
-      <filter-modal />
-      <div class="teacher-table__search flex-fill form-floating ms-5 text-dark">
+      <div class="teacher-table__search flex-fill form-floating text-dark">
         <input type="text" class="form-control" id="search" placeholder="search" v-model="search" />
         <label for="search">Поиск</label>
       </div>
@@ -13,16 +12,15 @@
       <input type="button" value="Поиск" class="btn btn-light ms-5" @click="filterApply" />
     </header>
 
-    <custom-table :headers="tableHeaders" :items="tableItems" @click-action="clickAction" />
+    <custom-table :headers="tableHeaders" :items="tableItems" :sorting-item="sortingItem" @click-action="clickAction" @sorting="changeSorting" />
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { TableHeader, TableItem } from '@/types/ui'
+import { SortingItem, TableHeader, TableItem } from '@/types/ui'
 import { useRouter } from 'vue-router'
 import { TeacherApi } from '@/api'
-import FilterModal from '@/components/FilterModal.vue'
 import CustomTable from '@/ui/table/CustomTable.vue'
 import CustomLoader from '@/ui/loader/CustomLoader.vue';
 const router = useRouter()
@@ -50,6 +48,7 @@ const tableHeaders = computed<TableHeader[]>(() => [
     title: 'Год публикации',
     type: 'number',
     name: 'publication_year',
+	isSorting: true,
   },
   {
     title: 'Цена',
@@ -59,19 +58,25 @@ const tableHeaders = computed<TableHeader[]>(() => [
 ]);
 
 const tableItems = ref<TableItem[]>([]);
+const sortingItem = ref<SortingItem | null>(null);
 
-
-
-function filterApply() {
-  console.log('apply')
+async function changeSorting(item: SortingItem | null) {
+	isLoading.value = true;
+	sortingItem.value = item;
+	await updateData();
+	isLoading.value = false;
 }
 
 function clickAction(id: string | number) {
 	router.push(`/order/${id}`)
 }
 
+async function updateData() {
+	tableItems.value = await TeacherApi.getPublications(sortingItem.value);
+}
+
 (async () => {
-	tableItems.value = await TeacherApi.getPublications();
+	await updateData();
 	isLoading.value = false;
 })();
 </script>
