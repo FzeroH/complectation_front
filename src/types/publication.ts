@@ -27,7 +27,7 @@ export type StudentDisciplineItem = {
 }
 
 export type RecOtherInfo = {
-  students_group_type: ListItem | null
+  students_group_type: string
   students_discipline_semester: number
   request_count: number
 }
@@ -35,7 +35,7 @@ export type RecOtherInfo = {
 export type RecommendItem = {
   discipline: ListItem | null
   students_group: ListItem | null
-  students_group_type: ListItem | null
+  students_group_type: string
   students_discipline_semester: number
   request_count: number
 }

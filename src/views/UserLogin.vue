@@ -30,7 +30,6 @@ const users_email = ref('')
 
 function apply() {
 	userStore.authUser(users_email.value, users_password.value)
-	console.log('apply');
 }
 </script>
 

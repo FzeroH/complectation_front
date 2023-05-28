@@ -48,7 +48,7 @@
 		  <tr v-for="(item, index) in recommendList" :key="index">
 			<td><custom-select :items="disciplines" :selected="item.discipline" title="Дисциплина" @change="recDisciplineChange(index, $event)" /></td>
 			<td><custom-select :items="student_groups[index]" :selected="item.students_group" title="Группа" @change="recStudentGroupChange(index, $event)" :disabled="!student_groups[index]?.length" /></td>
-			<td class="text-center">{{ item.students_group_type?.title ?? '-' }}</td>
+			<td class="text-center">{{ item.students_group_type || '-' }}</td>
 			<td class="text-center">{{ item.students_discipline_semester === 0 ? '-' : item.students_discipline_semester }}</td>
 			<td class="text-center">{{ item.request_count }}</td>
 			<td class="text-center">
@@ -124,7 +124,7 @@ async function recDisciplineChange(rowIndex: number, item: ListItem | null) {
 	if (item === null) {
 		recItem.students_discipline_semester = 0;
 		recItem.students_group = null;
-		recItem.students_group_type = null;
+		recItem.students_group_type = '';
 		recItem.request_count = 0;
 		student_groups.value[rowIndex] = [];
 	} else {
@@ -139,7 +139,7 @@ async function recStudentGroupChange(rowIndex: number, item: ListItem | null) {
 
 	if (item === null) {
 		recItem.students_discipline_semester = 0;
-		recItem.students_group_type = null;
+		recItem.students_group_type = '';
 		recItem.request_count = 0;
 	} else {
 		const resRecOtherInfo = await TeacherApi.getRecOtherInfo(+recItem.discipline!.value!, +recItem.students_group!.value!)
@@ -157,7 +157,7 @@ function addRow() {
 	recommendList.value.push({
 		discipline: null,
 	students_group: null,
-	students_group_type: null,
+	students_group_type: '',
 	students_discipline_semester: 0,
 	request_count: 0,
 })

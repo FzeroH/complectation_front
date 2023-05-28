@@ -1,5 +1,5 @@
 <template>
-  <select class="custom-select form-select" aria-label="select" @change="change">
+  <select class="custom-select form-select" aria-label="select" :disabled="!!props.disabled" @change="change">
     <option>
       {{ props.title }}
     </option>
@@ -23,9 +23,10 @@ const emit = defineEmits<{
 }>()
 
 const props = defineProps<{
-  title: string
-  items: ListItem[]
-  selected: ListItem | null
+  title: string;
+  items: ListItem[];
+  selected: ListItem | null;
+  disabled?: boolean;
 }>()
 
 function change(event: any) {

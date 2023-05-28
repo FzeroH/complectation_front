@@ -7,7 +7,7 @@ import TeacherProfile from '@/views/teacher/TeacherProfile.vue';
 import LibrarianTable from '@/views/librarian/LibrarianTable.vue'
 import PriceList from '@/views/librarian/PriceList.vue';
 import OrderList from '@/views/librarian/OrderList.vue';
-import AdminTable from '@/views/admin/AdminTable.vue';
+import AdminMain from '@/views/admin/AdminMain.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,13 +56,13 @@ const router = createRouter({
 		{
 			path: '/admin',
 			name: 'admin-main',
-			component: AdminTable,
+			component: AdminMain,
 		},
 		{
 			path: '/admin/:table',
 			name: 'admin-table',
 			props: true,
-			component: AdminTable,
+			component: AdminMain,
 		},
 	  ]
     },
