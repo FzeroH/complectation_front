@@ -86,7 +86,7 @@ async function updateItem(item: TableItem | null) {
   if (selectedTable.value && item) {
 	isLoading.value = true;
     await AdminApi.updateItem(selectedTable.value.value.toString(), item)
-
+	await updateDataTable();
 	selectedItem.value = null;
 	isLoading.value = false;
   }

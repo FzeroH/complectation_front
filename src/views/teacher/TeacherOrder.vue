@@ -126,6 +126,7 @@ async function recDisciplineChange(rowIndex: number, item: ListItem | null) {
 		recItem.students_group = null;
 		recItem.students_group_type = '';
 		recItem.request_count = 0;
+		recItem.students_group_count = 0;
 		student_groups.value[rowIndex] = [];
 	} else {
 		const rec_student_groups = await TeacherApi.getStudentGroupsByIdDis(+item.value)
@@ -141,6 +142,7 @@ async function recStudentGroupChange(rowIndex: number, item: ListItem | null) {
 		recItem.students_discipline_semester = 0;
 		recItem.students_group_type = '';
 		recItem.request_count = 0;
+		recItem.students_group_count = 0;
 	} else {
 		const resRecOtherInfo = await TeacherApi.getRecOtherInfo(+recItem.discipline!.value!, +recItem.students_group!.value!)
 
@@ -148,6 +150,7 @@ async function recStudentGroupChange(rowIndex: number, item: ListItem | null) {
 			recItem.students_discipline_semester = resRecOtherInfo.students_discipline_semester;
 			recItem.students_group_type = resRecOtherInfo.students_group_type;
 			recItem.request_count = resRecOtherInfo.request_count;
+			recItem.students_group_count = resRecOtherInfo.students_group_count;
 		}
 	}
 }
