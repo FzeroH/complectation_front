@@ -30,6 +30,7 @@ export type RecOtherInfo = {
   students_group_type: string
   students_discipline_semester: number
   request_count: number
+  students_group_count: number
 }
 
 export type RecommendItem = {
@@ -38,6 +39,7 @@ export type RecommendItem = {
   students_group_type: string
   students_discipline_semester: number
   request_count: number
+  students_group_count: number
 }
 
 export type FullRecommendItem = {

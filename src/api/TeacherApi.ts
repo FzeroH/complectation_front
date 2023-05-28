@@ -10,9 +10,9 @@ import { PublicationFullInfo, RecOtherInfo } from '@/types';
 import getAllOrders from './mock/getAllOrders';
 
 export class TeacherApi extends Api {
-	static async getPublications(sorting: SortingItem | null): Promise<TableItem[]> {
+	static async getPublications(sorting: SortingItem | null, search: string): Promise<TableItem[]> {
 		// TODO Убрать комментарий
-		// return await this.get('/publications', sorting) as Promise<TableItem[]>;
+		// return await this.get('/publications', {sorting, search}) as Promise<TableItem[]>;
 		return new Promise((resolve) => resolve(getPublications()))
 	}
 

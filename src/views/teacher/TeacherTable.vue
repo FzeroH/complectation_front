@@ -9,7 +9,7 @@
         <label for="search">Поиск</label>
       </div>
 
-      <input type="button" value="Поиск" class="btn btn-light ms-5" @click="filterApply" />
+      <input type="button" value="Поиск" class="btn btn-light ms-5" @click="searchApply" />
     </header>
 
     <custom-table :headers="tableHeaders" :items="tableItems" :sorting-item="sortingItem" @click-action="clickAction" @sorting="changeSorting" />
@@ -67,12 +67,18 @@ async function changeSorting(item: SortingItem | null) {
 	isLoading.value = false;
 }
 
+async function searchApply() {
+	isLoading.value = true;
+	await updateData();
+	isLoading.value = false;
+}
+
 function clickAction(id: string | number) {
 	router.push(`/order/${id}`)
 }
 
 async function updateData() {
-	tableItems.value = await TeacherApi.getPublications(sortingItem.value);
+	tableItems.value = await TeacherApi.getPublications(sortingItem.value, search.value);
 }
 
 (async () => {
