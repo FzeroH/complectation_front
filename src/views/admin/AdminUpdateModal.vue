@@ -8,17 +8,45 @@
         <h2>{{ props.itemTable.title }}</h2>
 
         <form v-if="newItem" class="admin-update__form" @submit.prevent>
-			<template v-for="header in headers" :key="header.name">
-				<div v-if="!header.list && header.type === 'string'" class="form-floating mb-2 text-dark">
-					<input type="text" class="form-control" :id="header.name" :placeholder="header.title" v-model="newItem[header.name]" :disabled="!!header.disabled" />
-					<label :for="header.name">{{ header.title }}</label>
-				</div>
-				<div v-else-if="!header.list && header.type === 'number'" class="form-floating mb-2 text-dark">
-					<input type="number" class="form-control" :id="header.name" :placeholder="header.title" v-model="newItem[header.name]" :disabled="!!header.disabled" />
-					<label :for="header.name">{{ header.title }}</label>
-				</div>
-				<custom-select v-else-if="header.list" :items="header.list" :title="header.title" :selected="newItem[header.name] ? { title: '', value: newItem[header.name] } : null"  :disabled="!!header.disabled" class="mb-2" />
-			</template>
+          <template v-for="header in headers" :key="header.name">
+            <div
+              v-if="!header.list && header.type === 'string'"
+              class="form-floating mb-2 text-dark"
+            >
+              <input
+                type="text"
+                class="form-control"
+                :id="header.name"
+                :placeholder="header.title"
+                v-model="newItem[header.name]"
+                :disabled="!!header.disabled"
+              />
+              <label :for="header.name">{{ header.title }}</label>
+            </div>
+            <div
+              v-else-if="!header.list && header.type === 'number'"
+              class="form-floating mb-2 text-dark"
+            >
+              <input
+                type="number"
+                class="form-control"
+                :id="header.name"
+                :placeholder="header.title"
+                v-model="newItem[header.name]"
+                :disabled="!!header.disabled"
+              />
+              <label :for="header.name">{{ header.title }}</label>
+            </div>
+            <custom-select
+              v-else-if="header.list"
+              :items="header.list"
+              :title="header.title"
+              :selected="newItem[header.name] === null ? null : { title: '', value: newItem[header.name]!.toString() }"
+              :disabled="!!header.disabled"
+              class="mb-2"
+              @change="selectChange(header.name, $event)"
+            />
+          </template>
 
           <footer class="d-flex justify-content-end align-items-center">
             <input
@@ -63,10 +91,17 @@ const hasUpdated = computed<boolean>(
 watch(
   props.oldItem,
   (newValue) => {
-    if (!!newValue && (!newItem.value || newItem.value.id !== newValue.id)) newItem.value = {...newValue}
+    if (!!newValue && (!newItem.value || newItem.value.id !== newValue.id))
+      newItem.value = { ...newValue }
   },
-  { immediate: true }
+  { immediate: true },
 )
+
+function selectChange(name: string, item: ListItem | null) {
+	if (newItem.value && name in newItem.value) {
+		newItem.value[name as keyof TableItem] = item === null ? item : item.value;
+	}
+}
 
 function close() {
   emit('close')
@@ -79,20 +114,20 @@ function apply() {
 
 <style lang="scss" scoped>
 .admin-modal {
-	position: fixed;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .admin-update {
-	border-radius: 10px;
-	min-width: 1000px;
-	min-height: 300px;
-	max-height: 500px;
-	overflow-y: auto;
+  border-radius: 10px;
+  min-width: 1000px;
+  min-height: 300px;
+  max-height: 500px;
+  overflow-y: auto;
 
   &__form {
   }

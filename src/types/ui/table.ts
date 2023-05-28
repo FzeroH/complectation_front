@@ -14,7 +14,7 @@ export type AdminTableHeader = TableHeader & {
 	disabled?: true;
 }
 
-export type TableItem = Record<string, string | number> & { id: string | number };
+export type TableItem = Record<string, string | number | null> & { id: string | number };
 
 export type DirectionSorting = typeof DIRECTION_ASC | typeof DIRECTION_DESC;
 
