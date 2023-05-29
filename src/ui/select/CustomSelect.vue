@@ -6,7 +6,7 @@
     <option
       v-for="item in props.items"
       :key="item.value"
-      :selected="item.value === props.selected?.value"
+      :selected="item.value == props.selected?.value"
 	  :value="item.value"
     >
       {{ item.title }}

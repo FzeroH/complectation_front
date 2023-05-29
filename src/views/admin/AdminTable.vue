@@ -83,7 +83,7 @@
       >
         <td v-for="(header, indexCol) in props.headers" :title="item[indexCol]" :key="header.name">
           {{
-            header.list?.find((headerListItem) => headerListItem.value === item[indexCol])?.title ??
+            header.list?.find((headerListItem) => headerListItem.value == item[indexCol])?.title ??
             item[indexCol]
           }}
         </td>

@@ -18,20 +18,20 @@ export default (): AdminTableHeader[] => ([
 	},
 	{
 		title: 'list header 1',
-		type: 'string',
+		type: 'number',
 		name: 'list_header_1',
 		list: [
 			{
 			title: 'list 1',
-			value: 'list_1',
+			value: 1,
 		},
 		{
 			title: 'list 2',
-			value: 'list_2',
+			value: 2,
 		},
 		{
 			title: 'list 3',
-			value: 'list_3',
+			value: 3,
 		},
 	]
 	},
