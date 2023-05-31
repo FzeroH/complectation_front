@@ -181,7 +181,7 @@ function apply() {
 
 (async () => {
   const [order, res_pub_types, res_disciplines] = await Promise.all([
-	TeacherApi.getPublication(+props.id), 
+	TeacherApi.getPublication(+props.id),
 	TeacherApi.getPublicTypes(),
 	TeacherApi.getDisciplines(),
 ])

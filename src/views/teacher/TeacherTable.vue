@@ -74,7 +74,7 @@ async function searchApply() {
 }
 
 function clickAction(id: string | number) {
-	router.push(`/order/${id}`)
+  router.push(`/order/${id}`)
 }
 
 async function updateData() {
