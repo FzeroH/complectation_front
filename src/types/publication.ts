@@ -9,7 +9,7 @@ import {
 import { ListItem } from './ui'
 
 export type PublicationItem = {
-  id: string
+  publcation_id: string
   cafedra_name: string
   publication_author: string
   publication_title: string
@@ -19,7 +19,7 @@ export type PublicationItem = {
 }
 
 export type StudentDisciplineItem = {
-  discipline: ListItem
+  discipline_name: ListItem
   students_group_type_name: string
   students_group: ListItem
   request_count: number
