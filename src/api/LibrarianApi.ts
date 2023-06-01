@@ -16,12 +16,10 @@ export class LibrarianApi extends Api {
 
 	static async getCompanyNames(): Promise<ListItem[]> {
 		return await this.get('/companies') as Promise<ListItem[]>
-		// return await new Promise((resolve) => resolve(getCompanyNames()));
 	}
 
 	static async savePriceList(data: any): Promise<any> {
 		return await this.post('/file/upload', data)
-		// return await new Promise((resolve) => resolve(true));
 	}
 
 	static async formAnOrder(): Promise<any> {
@@ -31,6 +29,5 @@ export class LibrarianApi extends Api {
 
 	static async changeStatus(orderId: number, status: PublicationStatus): Promise<any> {
 		return await this.put('/change_status', { id: orderId, status })
-		// return await new Promise((resolve) => resolve(true));
 	}
 }

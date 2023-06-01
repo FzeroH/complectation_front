@@ -1,6 +1,7 @@
 import {ListItem, SortingItem, TableItem} from '@/types/ui';
 import { Api } from './Api';
 import { PublicationFullInfo, RecOtherInfo } from '@/types';
+import getAllOrders from "@/api/mock/getAllOrders";
 
 export class TeacherApi extends Api {
 
@@ -37,7 +38,7 @@ export class TeacherApi extends Api {
 
 	static async getAllOrders(): Promise<PublicationFullInfo[]> {
 		// TODO Убрать комментарий
-		return await this.get('/publications') as Promise<PublicationFullInfo[]> ;
+		return await this.get('/requests') as Promise<PublicationFullInfo[]> ;
 		// return new Promise((resolve) => resolve(getAllOrders()))
 	}
 }
