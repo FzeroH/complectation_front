@@ -43,36 +43,35 @@ const totalPrice = computed<number>(() =>
   orders.value.reduce((total, item) => total + item.publication_cost * item.request_count, 0),
 )
 
-
 async function updateData() {
-	orders.value = await LibrarianApi.getOrderList()
+  orders.value = await LibrarianApi.getOrderList()
 }
 
 async function updateStatus({ id, status }: PublicationFullInfo) {
   isLoading.value = true
   await LibrarianApi.changeStatus(id, status)
-  await updateData();
+  await updateData()
   isLoading.value = false
 }
 
 async function apply() {
-  isLoading.value = true;
+  isLoading.value = true
   await LibrarianApi.formAnOrder()
-  await updateData();
+  await updateData()
   isLoading.value = false
 }
 
 ;(async () => {
-  await updateData();
+  await updateData()
   isLoading.value = false
 })()
 </script>
 
 <style scoped lang="scss">
 .libr {
-	&__article {
-		border-radius: 10px;
-	}
+  &__article {
+    border-radius: 10px;
+  }
 
   &__footer {
     position: sticky;

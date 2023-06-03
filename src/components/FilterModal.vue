@@ -2,7 +2,11 @@
   <input type="button" value="Фильтр" class="btn btn-light" @click="open" />
 
   <teleport to="body">
-    <section v-if="isShowing" class="modal-window d-flex justify-content-center align-items-center" @click.stop="close">
+    <section
+      v-if="isShowing"
+      class="modal-window d-flex justify-content-center align-items-center"
+      @click.stop="close"
+    >
       <section @click.stop class="filter-modal p-2 bg-light">
         <h2>Фильтры</h2>
       </section>

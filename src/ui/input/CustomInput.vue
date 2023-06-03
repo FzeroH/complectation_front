@@ -1,17 +1,13 @@
 <template>
-	<input :type="props.type" >
+  <input :type="props.type" />
 </template>
 
-
 <script setup lang="ts">
-import { InputType } from '@/types/ui';
+import { InputType } from '@/types/ui'
 
 const props = defineProps<{
-	type: InputType;
-}>();
+  type: InputType
+}>()
 </script>
 
-<style scoped lang="scss">
-
-
-</style>
+<style scoped lang="scss"></style>

@@ -1,5 +1,10 @@
 <template>
-  <select class="custom-select form-select" aria-label="select" :disabled="!!props.disabled" @change="change">
+  <select
+    class="custom-select form-select"
+    aria-label="select"
+    :disabled="!!props.disabled"
+    @change="change"
+  >
     <option>
       {{ props.title }}
     </option>
@@ -7,7 +12,7 @@
       v-for="item in props.items"
       :key="item.value"
       :selected="item.value == props.selected?.value"
-	  :value="item.value"
+      :value="item.value"
     >
       {{ item.title }}
     </option>
@@ -23,14 +28,14 @@ const emit = defineEmits<{
 }>()
 
 const props = defineProps<{
-  title: string;
-  items: ListItem[];
-  selected: ListItem | null;
-  disabled?: boolean;
+  title: string
+  items: ListItem[]
+  selected: ListItem | null
+  disabled?: boolean
 }>()
 
 function change(event: any) {
-  emit('change', props.items.find(item => item.value == event.target?.value) ?? null)
+  emit('change', props.items.find((item) => item.value == event.target?.value) ?? null)
 }
 </script>
 

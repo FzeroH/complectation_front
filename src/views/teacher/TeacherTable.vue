@@ -1,7 +1,7 @@
 <template>
-	<div v-if="isLoading" class="loader-center">
-		<custom-loader />
-	</div>
+  <div v-if="isLoading" class="loader-center">
+    <custom-loader />
+  </div>
   <section v-else class="teacher-table">
     <header class="d-flex mb-3">
       <div class="teacher-table__search flex-fill form-floating text-dark">
@@ -12,7 +12,13 @@
       <input type="button" value="Поиск" class="btn btn-light ms-5" @click="searchApply" />
     </header>
 
-    <custom-table :headers="tableHeaders" :items="tableItems" :sorting-item="sortingItem" @click-action="clickAction" @sorting="changeSorting" />
+    <custom-table
+      :headers="tableHeaders"
+      :items="tableItems"
+      :sorting-item="sortingItem"
+      @click-action="clickAction"
+      @sorting="changeSorting"
+    />
   </section>
 </template>
 
@@ -22,7 +28,7 @@ import { SortingItem, TableHeader, TableItem } from '@/types/ui'
 import { useRouter } from 'vue-router'
 import { TeacherApi } from '@/api'
 import CustomTable from '@/ui/table/CustomTable.vue'
-import CustomLoader from '@/ui/loader/CustomLoader.vue';
+import CustomLoader from '@/ui/loader/CustomLoader.vue'
 const router = useRouter()
 
 const search = ref('')
@@ -48,29 +54,29 @@ const tableHeaders = computed<TableHeader[]>(() => [
     title: 'Год публикации',
     type: 'number',
     name: 'publication_year',
-	isSorting: true,
+    isSorting: true,
   },
   {
     title: 'Цена',
     type: 'number',
     name: 'publication_cost',
   },
-]);
+])
 
-const tableItems = ref<TableItem[]>([]);
-const sortingItem = ref<SortingItem | null>(null);
+const tableItems = ref<TableItem[]>([])
+const sortingItem = ref<SortingItem | null>(null)
 
 async function changeSorting(item: SortingItem | null) {
-	isLoading.value = true;
-	sortingItem.value = item;
-	await updateData();
-	isLoading.value = false;
+  isLoading.value = true
+  sortingItem.value = item
+  await updateData()
+  isLoading.value = false
 }
 
 async function searchApply() {
-	isLoading.value = true;
-	await updateData();
-	isLoading.value = false;
+  isLoading.value = true
+  await updateData()
+  isLoading.value = false
 }
 
 function clickAction(id: string | number) {
@@ -78,13 +84,13 @@ function clickAction(id: string | number) {
 }
 
 async function updateData() {
-	tableItems.value = await TeacherApi.getPublications(sortingItem.value, search.value);
+  tableItems.value = await TeacherApi.getPublications(sortingItem.value, search.value)
 }
 
-(async () => {
-	await updateData();
-	isLoading.value = false;
-})();
+;(async () => {
+  await updateData()
+  isLoading.value = false
+})()
 </script>
 
 <style scoped lang="scss">

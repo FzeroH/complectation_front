@@ -1,4 +1,4 @@
 export type ListItem = {
-	title: string;
-	value: string | number;
+  title: string
+  value: string | number
 }

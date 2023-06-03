@@ -6,7 +6,7 @@
 
 <style scoped lang="scss">
 .custom-loader {
-	width: 3rem;
-	height: 3rem;
+  width: 3rem;
+  height: 3rem;
 }
 </style>

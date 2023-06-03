@@ -55,7 +55,7 @@ export type PublicationStatus =
   | typeof STATUS_PUBLISHING
   | typeof STATUS_DONE
   | typeof STATUS_REFUSED
-  | typeof STATUS_ORDER;
+  | typeof STATUS_ORDER
 
 export type PublicationFullInfo = {
   id: number

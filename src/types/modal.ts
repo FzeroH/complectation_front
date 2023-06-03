@@ -1,1 +1,1 @@
-export type ModalComponent = { close: () => void, open: () => void }
+export type ModalComponent = { close: () => void; open: () => void }

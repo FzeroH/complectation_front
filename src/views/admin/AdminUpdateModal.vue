@@ -78,14 +78,25 @@ const props = defineProps<{
 const emit = defineEmits<{
   (e: 'close'): void
   (e: 'update', item: TableItem): void
+  (e: 'create', item: TableItem): void
 }>()
 
 const newItem = ref<TableItem | null>()
 
+const isCreating = computed<boolean>(
+  () => !!props.oldItem && Object.keys(props.oldItem).every((key) => !props.oldItem![key]),
+)
+
 const hasUpdated = computed<boolean>(
   () =>
     !!newItem.value &&
-    Object.keys(props.oldItem).some((key) => props.oldItem[key] !== newItem.value![key]),
+    ((isCreating.value &&
+      props.headers.every(
+        (header) =>
+          !!header.disabled || !!newItem.value![header.name] || newItem.value![header.name] === 0,
+      )) ||
+      (!isCreating.value &&
+        Object.keys(props.oldItem).some((key) => props.oldItem[key] !== newItem.value![key]))),
 )
 
 watch(
@@ -98,9 +109,9 @@ watch(
 )
 
 function selectChange(name: string, item: ListItem | null) {
-	if (newItem.value && name in newItem.value) {
-		newItem.value[name as keyof TableItem] = item === null ? item : item.value;
-	}
+  if (newItem.value && name in newItem.value) {
+    newItem.value[name as keyof TableItem] = item === null ? item : item.value
+  }
 }
 
 function close() {
@@ -108,7 +119,8 @@ function close() {
 }
 
 function apply() {
-  if (newItem.value) emit('update', newItem.value)
+  if (isCreating.value && newItem.value) emit('create', newItem.value)
+  else if (newItem.value) emit('update', newItem.value)
 }
 </script>
 

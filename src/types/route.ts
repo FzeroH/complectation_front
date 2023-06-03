@@ -1,4 +1,4 @@
 export type HeaderRoute = {
-	title: string;
-	to: string;
+  title: string
+  to: string
 }

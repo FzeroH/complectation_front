@@ -5,10 +5,18 @@
   <form v-else class="price-list" ref="form" @submit.prevent="apply">
     <div class="d-flex mb-2">
       <h3>Выберите издательство:</h3>
-      <custom-select name="company_name" :items="company_names" :selected="company_name" title="Издательство" />
+      <custom-select
+        name="company_name"
+        :items="company_names"
+        :selected="company_name"
+        title="Издательство"
+      />
     </div>
     <div class="price-list__down-file mb-3 d-flex justify-content-center align-items-center">
-      <label for="formFile" class="form-label text-light pointer d-flex flex-column align-items-center">
+      <label
+        for="formFile"
+        class="form-label text-light pointer d-flex flex-column align-items-center"
+      >
         <svg
           width="41"
           height="46"
@@ -31,14 +39,20 @@
           </defs>
         </svg>
 
-		<h2>Вставить файл</h2>
+        <h2>Вставить файл</h2>
       </label>
 
-      <input class="form-control d-none" type="file" id="formFile" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="file" />
+      <input
+        class="form-control d-none"
+        type="file"
+        id="formFile"
+        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        name="file"
+      />
     </div>
 
     <footer class="d-flex justify-content-end">
-      <input type="submit" value="Загрузить" class="btn btn-light"  />
+      <input type="submit" value="Загрузить" class="btn btn-light" />
     </footer>
   </form>
 </template>
@@ -50,16 +64,16 @@ import { ListItem } from '@/types/ui'
 import { LibrarianApi } from '@/api'
 
 const company_name = ref<ListItem | null>(null)
-const company_names = ref<ListItem[]>([]);
-const isLoading = ref<boolean>(true);
-const form = ref<HTMLFormElement | null>(null);
+const company_names = ref<ListItem[]>([])
+const isLoading = ref<boolean>(true)
+const form = ref<HTMLFormElement | null>(null)
 
 async function apply() {
-	console.log('apply', (new FormData(form.value!)).get('file'))
-	await LibrarianApi.savePriceList(new FormData(form.value!))
+  console.log('apply', new FormData(form.value!).get('file'))
+  await LibrarianApi.savePriceList(new FormData(form.value!))
 }
 
-(async () => {
+;(async () => {
   const res_company_names = await LibrarianApi.getCompanyNames()
   if (res_company_names) company_names.value = res_company_names
 
@@ -69,8 +83,8 @@ async function apply() {
 
 <style scoped lang="scss">
 .price-list {
-	&__down-file {
-		height: 150px;
-	}
+  &__down-file {
+    height: 150px;
+  }
 }
 </style>
