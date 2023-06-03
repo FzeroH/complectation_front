@@ -133,7 +133,7 @@
         class="btn btn-light"
         type="button"
         value="Создать заявку"
-        :disabled="hasApply"
+        :disabled="!canApply || hasApply"
         @click="apply"
       />
     </footer>
@@ -147,7 +147,7 @@ import CustomSelect from '@/ui/select/CustomSelect.vue'
 
 import { TeacherApi } from '@/api'
 import { ListItem } from '@/types/ui'
-import { RecommendItem } from '@/types'
+import { CreateOrderRequest, RecommendItem } from '@/types'
 
 const props = defineProps<{
   id: string
@@ -171,6 +171,13 @@ const student_groups = ref<ListItem[][]>([])
 const request_count = ref<number>(0)
 const recQuantity = computed<number>(() =>
   recommendList.value.reduce((total, item) => total + item.request_count, 0),
+)
+
+const canApply = computed<boolean>(
+  () =>
+    !!props.id &&
+    !!pub_type_name.value?.value &&
+    !!recommendList.value.filter((item) => !!item.discipline?.value).length,
 )
 
 const hasApply = ref<boolean>(false)
@@ -237,10 +244,20 @@ function removeRow(index: number) {
 }
 
 function apply() {
-  hasApply.value = true
+  if (canApply.value) {
+    hasApply.value = true
 
-  // TODO Доделать apply
-  TeacherApi.createOrder({})
+    const items: CreateOrderRequest = {
+      pub_type_id: +pub_type_name.value!.value!,
+      publication_id: +props.id,
+	  request_count: +request_count.value, 
+      students_discipline_ids: recommendList.value
+        .filter((item) => !!item.discipline?.value)
+        .map((item) => +item.discipline!.value),
+    }
+
+    TeacherApi.createOrder(items)
+  }
 }
 
 ;(async () => {

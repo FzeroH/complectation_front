@@ -19,20 +19,26 @@
       @click-action="clickAction"
       @sorting="changeSorting"
     />
+    <footer>
+      <table-paginator :page="currentPage" :total="total" :limit="10" @change="changePage" />
+    </footer>
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, defineProps } from 'vue'
 import { SortingItem, TableHeader, TableItem } from '@/types/ui'
 import { useRouter } from 'vue-router'
 import { TeacherApi } from '@/api'
 import CustomTable from '@/ui/table/CustomTable.vue'
 import CustomLoader from '@/ui/loader/CustomLoader.vue'
+import TablePaginator from '@/ui/table/TablePaginator.vue'
 const router = useRouter()
 
 const search = ref('')
 const isLoading = ref(true)
+const total = ref(0)
+const props = defineProps<{ page: string }>()
 
 const tableHeaders = computed<TableHeader[]>(() => [
   {
@@ -66,6 +72,8 @@ const tableHeaders = computed<TableHeader[]>(() => [
 const tableItems = ref<TableItem[]>([])
 const sortingItem = ref<SortingItem | null>(null)
 
+const currentPage = computed<number>(() => props.page ? +props.page : 1)
+
 async function changeSorting(item: SortingItem | null) {
   isLoading.value = true
   sortingItem.value = item
@@ -84,7 +92,16 @@ function clickAction(id: string | number) {
 }
 
 async function updateData() {
-  tableItems.value = await TeacherApi.getPublications(sortingItem.value, search.value)
+  const { total: totalCount, data } = await TeacherApi.getPublications(currentPage.value, sortingItem.value, search.value)
+  total.value = totalCount
+  tableItems.value = data
+}
+
+async function changePage(newPage: number) {
+	isLoading.value = true;
+	await router.push({ name: 'teacher-main-page', params: { page: newPage } })
+	await updateData();
+	isLoading.value = false;
 }
 
 ;(async () => {

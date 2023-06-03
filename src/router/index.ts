@@ -18,11 +18,16 @@ const router = createRouter({
       component: MainPage,
       children: [
         {
-          path: '/teacher',
+          path: '/teacher/:page',
           props: true,
-          name: 'teacher-main',
+          name: 'teacher-main-page',
           component: TeacherTable,
         },
+		{
+			path: '/teacher',
+			name: 'teacher-main',
+			component: TeacherTable,
+		  },
         {
           path: '/order/:id',
           props: true,

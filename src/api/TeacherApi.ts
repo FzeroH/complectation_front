@@ -1,13 +1,24 @@
-import {ListItem, SortingItem, TableItem} from '@/types/ui';
-import { Api } from './Api';
-import { PublicationFullInfo, RecOtherInfo } from '@/types';
-import getAllOrders from "@/api/mock/getAllOrders";
+import { ListItem, SortingItem, TableItem } from '@/types/ui'
+import { Api } from './Api'
+import getPublications from './mock/getPublications'
+import getPublication from './mock/getPublication'
+import getPubTypes from './mock/getPubTypes'
+import getDisciplines from './mock/getDisciplines'
+import getStudentGroupsByIdDis from './mock/getStudentGroupsByIdDis'
+import getRecOtherInfo from './mock/getRecOtherInfo'
+import { CreateOrderRequest, PublicationFullInfo, RecOtherInfo } from '@/types'
+import getAllOrders from './mock/getAllOrders'
 
 export class TeacherApi extends Api {
-
-	static async getPublications(sorting: SortingItem | null): Promise<TableItem[]> {
-		return await this.get('/publications', sorting) as Promise<TableItem[]>;
-	}
+  static async getPublications(page: number, sorting: SortingItem | null, search: string): Promise<{ total: number; data: TableItem[] }> {
+    // TODO Убрать комментарий
+    // return await this.get('/publications', {sorting, search}) as Promise<TableItem[]>;
+    return new Promise((resolve) => {
+		const total = 500;
+		const data = getPublications();
+		resolve({ total, data })
+	})
+  }
 
 	static async getPublication(id: number): Promise<TableItem | null> {
 		return await this.get(`/publication/?id=${id}`) as Promise<TableItem>;
@@ -30,11 +41,11 @@ export class TeacherApi extends Api {
 		return await this.get(`/group_info/?discipline_id=${disciplineId}&student_group_id=${studentGroupId}`) as Promise<RecOtherInfo>;
 	}
 
-	static async createOrder(items: any): Promise<any> {
-		// TODO Убрать комментарий
-		return await this.post('/create_request', items);
-		// return new Promise((resolve) => resolve(true))
-	}
+  static async createOrder(items: CreateOrderRequest): Promise<any> {
+    // TODO Убрать комментарий
+    // return await this.post('/order', items); 
+    return new Promise((resolve) => resolve(true))
+  }
 
 	static async getAllOrders(): Promise<PublicationFullInfo[]> {
 		// TODO Убрать комментарий

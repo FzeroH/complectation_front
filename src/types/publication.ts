@@ -70,3 +70,10 @@ export type PublicationFullInfo = {
   publication_cost: number
   recommend_list: FullRecommendItem[]
 }
+
+export type CreateOrderRequest = {
+  pub_type_id: number
+  publication_id: number
+  students_discipline_ids: number[]
+  request_count: number
+}

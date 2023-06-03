@@ -12,3 +12,5 @@ export const STATUS_ORDER = 'Добавлено в заказ'
 
 export const DIRECTION_ASC = 'asc'
 export const DIRECTION_DESC = 'desc'
+
+export const USER_STORAGE_NAME = 'user'

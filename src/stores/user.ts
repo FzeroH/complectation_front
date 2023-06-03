@@ -1,18 +1,8 @@
 import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import { User } from '@/types'
-import { ROLE_ADMINISTRATOR, ROLE_TEACHER, ROLE_LIBRARIAN, ROLE_BASE } from '@/const'
-
-const users: User[] = [
-  {
-    first_name: 'Тестовый',
-    last_name: 'Пользователь',
-    users_password: 'pswd',
-    users_email: 'user',
-    token: 'ffwegfsgs',
-    role_name: ROLE_TEACHER,
-  },
-]
+import { ROLE_ADMINISTRATOR, ROLE_TEACHER, ROLE_LIBRARIAN, ROLE_BASE, USER_STORAGE_NAME } from '@/const'
+import { UserApi } from '@/api'
 
 const initialUser = (): User => ({
   first_name: '',
@@ -37,26 +27,34 @@ export const useUserStore = defineStore('user', () => {
     user.users_email = newUser.users_email
     user.token = newUser.token
     user.role_name = newUser.role_name
+
+	sessionStorage.setItem(USER_STORAGE_NAME, JSON.stringify({...newUser}))
   }
 
-  function authUser(users_email: string, users_password: string) {
+  async function authUser(users_email?: string, users_password?: string) {
     let foundedUser = null
 
-    // TODO Убрать комментарии
-    // if (password) {
-    // 	foundedUser = users.find(u => u.login === login && u.password === password)
-    // } else {
-    // 	const key = login;
-    // 	foundedUser = users.find(u => u.key === key)
-    // }
-    foundedUser = users[0]
+    if (users_email && users_password) {
+    	foundedUser = await UserApi.login(users_email, users_password);
+    } else {
+		const sessionUserStr = sessionStorage.getItem(USER_STORAGE_NAME)
+		if (sessionUserStr) {
+			const sessionUser = JSON.parse(sessionUserStr) as User;
+			const token = sessionUser.token;
+
+			if (token) foundedUser = await UserApi.getUser();
+		}
+    }
 
     if (foundedUser) updateUser(foundedUser)
+	else sessionStorage.removeItem(USER_STORAGE_NAME)
 
     return foundedUser
   }
 
-  function logout() {
+  async function logout() {
+	await UserApi.logout();
+	sessionStorage.removeItem(USER_STORAGE_NAME)
     updateUser(initialUser())
   }
 
