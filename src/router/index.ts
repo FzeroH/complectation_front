@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainPage from '@/views/MainPage.vue'
 import PageNotFound from '@/views/NotFound.vue'
-import TeacherTable from '@/views/teacher/TeacherTable.vue';
-import TeacherOrder from '@/views/teacher/TeacherOrder.vue';
-import TeacherProfile from '@/views/teacher/TeacherProfile.vue';
+import TeacherTable from '@/views/teacher/TeacherTable.vue'
+import TeacherOrder from '@/views/teacher/TeacherOrder.vue'
+import TeacherProfile from '@/views/teacher/TeacherProfile.vue'
 import LibrarianTable from '@/views/librarian/LibrarianTable.vue'
-import PriceList from '@/views/librarian/PriceList.vue';
-import OrderList from '@/views/librarian/OrderList.vue';
-import AdminMain from '@/views/admin/AdminMain.vue';
+import PriceList from '@/views/librarian/PriceList.vue'
+import OrderList from '@/views/librarian/OrderList.vue'
+import AdminMain from '@/views/admin/AdminMain.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,61 +16,61 @@ const router = createRouter({
       path: '/',
       name: 'MainPage',
       component: MainPage,
-	  children: [
-		{
-			path: '/teacher',
-			props: true,
-			name: 'teacher-main',
-			component: TeacherTable,
-		},
-		{
-			path: '/order/:id',
-			props: true,
-			name: 'teacher-order',
-			component: TeacherOrder,
-		},
-		{
-			path: '/profile',
-			props: true,
-			name: 'teacher-profile',
-			component: TeacherProfile,
-		},
+      children: [
+        {
+          path: '/teacher',
+          props: true,
+          name: 'teacher-main',
+          component: TeacherTable,
+        },
+        {
+          path: '/order/:id',
+          props: true,
+          name: 'teacher-order',
+          component: TeacherOrder,
+        },
+        {
+          path: '/profile',
+          props: true,
+          name: 'teacher-profile',
+          component: TeacherProfile,
+        },
 
-		{
-			path: '/librarian',
-			props: true,
-			name: 'librarian-main',
-			component: LibrarianTable,
-		},
-		{
-			path: '/price-list',
-			name: 'price-list',
-			component: PriceList,
-		},
-		{
-			path: '/order',
-			name: 'order-list',
-			component: OrderList,
-		},
+        {
+          path: '/librarian',
+          props: true,
+          name: 'librarian-main',
+          component: LibrarianTable,
+        },
+        {
+          path: '/price-list',
+          name: 'price-list',
+          component: PriceList,
+        },
+        {
+          path: '/order',
+          name: 'order-list',
+          component: OrderList,
+        },
 
-		{
-			path: '/admin',
-			name: 'admin-main',
-			component: AdminMain,
-		},
-		{
-			path: '/admin/:table',
-			name: 'admin-table',
-			props: true,
-			component: AdminMain,
-		},
-	  ]
+        {
+          path: '/admin',
+          name: 'admin-main',
+          component: AdminMain,
+        },
+        {
+          path: '/admin/:table',
+          name: 'admin-table',
+          props: true,
+          component: AdminMain,
+        },
+      ],
     },
-	{ 
-		path: "/:catchAll(.*)", 
-		name: 'PageNotFound',
-		component: PageNotFound 
-	}
+    {
+      path: '/:catchAll(.*)',
+      name: 'PageNotFound',
+      component: PageNotFound,
+    },
   ],
 })
 

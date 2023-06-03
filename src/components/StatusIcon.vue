@@ -1,11 +1,9 @@
-<template>
+<template>1</template>
 
-</template>
-
-<script scoped lang="ts">
-import { defineProps } from 'vue';
+<script setup lang="ts">
+import { defineProps } from 'vue'
 
 const props = defineProps<{
-	status: 
+  status: string
 }>
 </script>

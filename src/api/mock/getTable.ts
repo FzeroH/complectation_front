@@ -1,3 +1,1 @@
-export default (): any => ({
-	
-})
+export default (): any => ({})

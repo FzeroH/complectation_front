@@ -1,3 +1,1 @@
-export class UserApi {
-	
-}
+export class UserApi {}

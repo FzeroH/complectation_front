@@ -11,7 +11,7 @@
         <p class="fw-weight-bold">Издательство:</p>
         <p class="ms-2">{{ publicateItem.company_name }}</p>
       </div>
-	  <div class="col d-flex">
+      <div class="col d-flex">
         <p class="fw-weight-bold">Год издания:</p>
         <p class="ms-2">{{ publicateItem.publication_year }}</p>
       </div>
@@ -22,7 +22,7 @@
         <p class="fw-weight-bold">Автор:</p>
         <p class="ms-2">{{ publicateItem.publication_author }}</p>
       </div>
-	  <div class="col d-flex">
+      <div class="col d-flex">
         <p class="fw-weight-bold">Количество:</p>
         <p class="ms-2">{{ publicateItem.request_count }}</p>
       </div>

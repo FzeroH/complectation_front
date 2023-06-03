@@ -10,5 +10,5 @@ export const STATUS_DONE = 'Выполнено'
 export const STATUS_PUBLISHING = 'Передано в издательство'
 export const STATUS_ORDER = 'Добавлено в заказ'
 
-export const DIRECTION_ASC = 'asc';
-export const DIRECTION_DESC = 'desc';
+export const DIRECTION_ASC = 'asc'
+export const DIRECTION_DESC = 'desc'

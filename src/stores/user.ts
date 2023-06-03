@@ -31,12 +31,12 @@ export const useUserStore = defineStore('user', () => {
   const isLibrarian = computed<boolean>(() => user.role_name === ROLE_LIBRARIAN)
 
   function updateUser(newUser: User) {
-	user.first_name = newUser.first_name
-	user.last_name = newUser.last_name
-	user.users_password = newUser.users_password
-	user.users_email = newUser.users_email
-	user.token = newUser.token
-	user.role_name = newUser.role_name
+    user.first_name = newUser.first_name
+    user.last_name = newUser.last_name
+    user.users_password = newUser.users_password
+    user.users_email = newUser.users_email
+    user.token = newUser.token
+    user.role_name = newUser.role_name
   }
 
   function authUser(users_email: string, users_password: string) {
@@ -57,7 +57,7 @@ export const useUserStore = defineStore('user', () => {
   }
 
   function logout() {
-	updateUser(initialUser())
+    updateUser(initialUser())
   }
 
   return { user, logout, hasUser, authUser, isTeacher, isAdmin, isLibrarian }

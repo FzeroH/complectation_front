@@ -1,4 +1,4 @@
-import { TableItem } from '@/types/ui';
+import { TableItem } from '@/types/ui'
 
 export default (): TableItem[] => [
   {
