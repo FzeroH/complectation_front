@@ -74,6 +74,6 @@ const headers = computed<TableHeader[]>(() => [
 ])
 
 const tableItems = computed<TableItem[]>(() =>
-  publicateItem.value.recommend_list.map((item, index) => ({ ...item, id: index })),
+  publicateItem.value?.recommend_list?.map((item, index) => ({ ...item, id: index })),
 )
 </script>
