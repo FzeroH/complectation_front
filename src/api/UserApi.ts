@@ -1,15 +1,13 @@
 import { User } from '@/types'
-import getUser from './mock/getUser'
+import { Api } from "@/api/Api";
 
-export class UserApi {
+export class UserApi extends Api{
   static async login(users_email: string, users_password: string): Promise<User> {
-    // TODO Убрать комментарий
-    // return await this.get('/publications', {sorting, search}) as Promise<TableItem[]>;
-    return new Promise((resolve) => resolve(getUser()))
+    return await this.post('/auth/login', {users_email, users_password}) as Promise<User>;
   }
 
   static async getUser(): Promise<User> {
-    return new Promise((resolve) => resolve(getUser()))
+    return await this.get('/user') as Promise<User>
   }
 
   static async logout(): Promise<unknown> {
