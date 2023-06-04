@@ -20,7 +20,7 @@
       @sorting="changeSorting"
     />
     <footer>
-      <table-paginator :page="currentPage" :total="total" :limit="10" @change="changePage" />
+      <table-paginator :page="currentPage" :total="total" :limit="30" @change="changePage" />
     </footer>
   </section>
 </template>
