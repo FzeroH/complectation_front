@@ -1,34 +1,41 @@
-import { ref, computed, reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import { User } from '@/types'
 import { ROLE_ADMINISTRATOR, ROLE_TEACHER, ROLE_LIBRARIAN, ROLE_BASE, USER_STORAGE_NAME } from '@/const'
 import { UserApi } from '@/api'
+import axios from "axios";
 
 const initialUser = (): User => ({
-  first_name: '',
-  last_name: '',
-  users_password: '',
-  users_email: '',
-  token: '',
-  role_name: ROLE_BASE,
+    first_name: '',
+    last_name: '',
+    users_email: '',
+    token: '',
+    role_name: ROLE_BASE,
 })
 
 export const useUserStore = defineStore('user', () => {
-  const user = reactive<User>(initialUser())
-  const hasUser = computed<boolean>(() => user.role_name !== ROLE_BASE)
-  const isTeacher = computed<boolean>(() => user.role_name === ROLE_TEACHER)
-  const isAdmin = computed<boolean>(() => user.role_name === ROLE_ADMINISTRATOR)
-  const isLibrarian = computed<boolean>(() => user.role_name === ROLE_LIBRARIAN)
+    const user = reactive<User>(initialUser())
+    const hasUser = computed<boolean>(() => user.role_name !== ROLE_BASE)
+    const isTeacher = computed<boolean>(() => user.role_name === ROLE_TEACHER)
+    const isAdmin = computed<boolean>(() => user.role_name === ROLE_ADMINISTRATOR)
+    const isLibrarian = computed<boolean>(() => user.role_name === ROLE_LIBRARIAN)
 
   function updateUser(newUser: User) {
     user.first_name = newUser.first_name
     user.last_name = newUser.last_name
-    user.users_password = newUser.users_password
     user.users_email = newUser.users_email
     user.token = newUser.token
     user.role_name = newUser.role_name
 
 	sessionStorage.setItem(USER_STORAGE_NAME, JSON.stringify({...newUser}))
+      //
+      //
+      // if (newUser.token) {
+      //     localStorage.setItem('token',newUser.token)
+      //     axios.defaults.headers.common['Authorization'] = `Bearer ${newUser.token}`
+      // } else {
+      //     delete axios.defaults.headers.common['Authorization']
+      // }
   }
 
   async function authUser(users_email?: string, users_password?: string) {
@@ -40,7 +47,7 @@ export const useUserStore = defineStore('user', () => {
 		const sessionUserStr = sessionStorage.getItem(USER_STORAGE_NAME)
 		if (sessionUserStr) {
 			const sessionUser = JSON.parse(sessionUserStr) as User;
-			const token = sessionUser.token;
+			const token = `Bearer ${localStorage.getItem('token')}`;
 
 			if (token) foundedUser = await UserApi.getUser();
 		}
@@ -56,6 +63,7 @@ export const useUserStore = defineStore('user', () => {
 	await UserApi.logout();
 	sessionStorage.removeItem(USER_STORAGE_NAME)
     updateUser(initialUser())
+
   }
 
   return { user, logout, hasUser, authUser, isTeacher, isAdmin, isLibrarian }

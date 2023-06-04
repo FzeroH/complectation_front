@@ -3,7 +3,6 @@ import { ROLE_ADMINISTRATOR, ROLE_TEACHER, ROLE_LIBRARIAN, ROLE_BASE } from '@/c
 export type User = {
   first_name: string
   last_name: string
-  users_password: string
   users_email: string
   token: string
   role_name:
