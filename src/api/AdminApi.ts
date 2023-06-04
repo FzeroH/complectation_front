@@ -15,8 +15,9 @@ export class AdminApi extends Api {
 	}
 
 	static async updateItem(tableName: string, payload: TableItem): Promise<unknown> {
-		// TODO Убрать комментарий
-		// return await this.put(`/${tableName}`, payload);
-		return await new Promise((resolve) => resolve(true));
+		return await this.put(`/admin/${tableName}`, payload);
+	}
+	static async createItem(tableName: string, payload: TableItem): Promise<unknown> {
+		return await this.post(`/admin/${tableName}`, payload);
 	}
 }
