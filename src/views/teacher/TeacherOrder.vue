@@ -177,7 +177,7 @@ const canApply = computed<boolean>(
   () =>
     !!props.id &&
     !!pub_type_name.value?.value &&
-    !!recommendList.value.filter((item) => !!item.discipline?.value).length,
+    !!recommendList.value.filter((item) => !!item.discipline?.value).length && !!request_count.value,
 )
 
 const hasApply = ref<boolean>(false)
@@ -250,7 +250,7 @@ function apply() {
     const items: CreateOrderRequest = {
       pub_type_id: +pub_type_name.value!.value!,
       publication_id: +props.id,
-	  request_count: +request_count.value, 
+	  request_count: +request_count.value,
       students_discipline_ids: recommendList.value
         .filter((item) => !!item.discipline?.value)
         .map((item) => +item.discipline!.value),
