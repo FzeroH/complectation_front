@@ -6,7 +6,7 @@ import { ListItem } from "@/types/ui";
 export class LibrarianApi extends Api {
 	static async getRequestList(companyName: ListItem | null): Promise<PublicationFullInfo[]> {
 		// return await this.get('/price-list', companyName)
-		return await this.get('/requests') as Promise<PublicationFullInfo[]>
+		return await this.get('/requests', companyName) as Promise<PublicationFullInfo[]>
 		// return await new Promise((resolve) => resolve(getAllOrders()));
 	}
 
