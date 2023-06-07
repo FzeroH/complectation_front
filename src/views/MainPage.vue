@@ -10,7 +10,6 @@ const router = useRouter()
 const userStore = useUserStore()
 
 ;(async () => {
-	await userStore.authUser();
   if (userStore.isAdmin) await router.push('/admin')
   if (userStore.isTeacher) await router.push('/teacher')
   if (userStore.isLibrarian) await router.push('/librarian')

@@ -74,7 +74,6 @@ export type PublicationFullInfo = {
 export type CreateOrderRequest = {
   pub_type_id: number
   publication_id: number
-  // users_id:number
   students_discipline_ids: number[]
   request_count: number
 }

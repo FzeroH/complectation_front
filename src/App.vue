@@ -1,5 +1,8 @@
 <template>
-  <div v-if="userStore.hasUser" class="container">
+  <div v-if="isLoading" class="loader-center">
+    <custom-loader />
+  </div>
+  <div v-else-if="userStore.hasUser" class="container">
     <layout-header />
     <LayoutBody>
       <RouterView />
@@ -15,8 +18,16 @@ import LayoutBody from '@/components/layout/LayoutBody.vue'
 import UserLogin from '@/views/UserLogin.vue'
 
 import { useUserStore } from '@/stores/user'
+import CustomLoader from "@/ui/loader/CustomLoader.vue";
+import {ref} from "vue";
 
-const userStore = useUserStore()
+const userStore = useUserStore();
+const isLoading = ref(true);
+
+;(async ()=>{
+  await userStore.authUser();
+  isLoading.value = false;
+})()
 </script>
 
 <style lang="scss" scoped>

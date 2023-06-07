@@ -6,6 +6,7 @@ import { UserApi } from '@/api'
 import axios from "axios";
 
 const initialUser = (): User => ({
+    users_id: 0,
     first_name: '',
     last_name: '',
     users_email: '',
@@ -21,21 +22,20 @@ export const useUserStore = defineStore('user', () => {
     const isLibrarian = computed<boolean>(() => user.role_name === ROLE_LIBRARIAN)
 
   function updateUser(newUser: User) {
-    user.first_name = newUser.first_name
-    user.last_name = newUser.last_name
-    user.users_email = newUser.users_email
-    user.token = newUser.token
-    user.role_name = newUser.role_name
+      user.users_id = newUser.users_id
+      user.first_name = newUser.first_name
+      user.last_name = newUser.last_name
+      user.users_email = newUser.users_email
+      user.token = newUser.token
+      user.role_name = newUser.role_name
 
 	sessionStorage.setItem(USER_STORAGE_NAME, JSON.stringify({...newUser}))
-      //
-      //
-      // if (newUser.token) {
-      //     localStorage.setItem('token',newUser.token)
-      //     axios.defaults.headers.common['Authorization'] = `Bearer ${newUser.token}`
-      // } else {
-      //     delete axios.defaults.headers.common['Authorization']
-      // }
+
+      if (newUser.token) {
+          axios.defaults.headers.common['Authorization'] = `Bearer ${newUser.token}`
+      } else {
+          delete axios.defaults.headers.common['Authorization']
+      }
   }
 
   async function authUser(users_email?: string, users_password?: string) {
@@ -47,9 +47,12 @@ export const useUserStore = defineStore('user', () => {
 		const sessionUserStr = sessionStorage.getItem(USER_STORAGE_NAME)
 		if (sessionUserStr) {
 			const sessionUser = JSON.parse(sessionUserStr) as User;
-			const token = `Bearer ${localStorage.getItem('token')}`;
+			const token = sessionUser.token;
 
-			if (token) foundedUser = await UserApi.getUser();
+			if (token) {
+                foundedUser = await UserApi.getUser()
+                foundedUser.token = token
+            };
 		}
     }
 

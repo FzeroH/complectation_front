@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:3002/api'
+export const url = 'http://localhost:3002'
+
+axios.defaults.baseURL = `${url}/api`
 
 const config = {
     headers: {

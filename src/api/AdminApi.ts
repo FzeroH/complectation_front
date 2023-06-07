@@ -1,5 +1,5 @@
 import { AdminTableHeader, ListItem, SortingItem, TableItem } from "@/types/ui";
-import { Api } from "./Api";
+import {Api, url} from "./Api";
 
 export class AdminApi extends Api {
 	static async getTableList(): Promise<ListItem[]> {

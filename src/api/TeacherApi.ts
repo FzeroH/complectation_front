@@ -4,13 +4,12 @@ import {CreateOrderRequest, PublicationFullInfo, RecOtherInfo} from '@/types';
 
 export class TeacherApi extends Api {
   static async getPublications(page: number, sorting: SortingItem | null, search: string): Promise<{ total: number; data: TableItem[] }> {
-    return await this.get('/publications', { sorting, page, search}) as Promise<{ total: number; data: TableItem[] }>;
+    return await this.get('/publications', { ...sorting, page, search}) as Promise<{ total: number; data: TableItem[] }>;
   }
 
 	static async getPublication(id: number): Promise<TableItem | null> {
 		return await this.get(`/publication/?id=${id}`) as Promise<TableItem>;
 	}
-
 
 	static async getPublicTypes(): Promise<ListItem[] | null> {
 		return await (this.get(`/pub_types`) as Promise<ListItem[] | null>);

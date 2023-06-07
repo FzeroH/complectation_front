@@ -1,6 +1,7 @@
 import { ROLE_ADMINISTRATOR, ROLE_TEACHER, ROLE_LIBRARIAN, ROLE_BASE } from '@/const'
 
 export type User = {
+  users_id: number
   first_name: string
   last_name: string
   users_email: string
