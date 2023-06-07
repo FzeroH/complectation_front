@@ -1,5 +1,5 @@
 import { PublicationFullInfo, PublicationStatus } from "@/types";
-import { Api } from "./Api";
+import {Api, url} from "./Api";
 import getAllOrders from "./mock/getAllOrders";
 import { ListItem } from "@/types/ui";
 
@@ -23,6 +23,13 @@ export class LibrarianApi extends Api {
 	}
 
 	static async formAnOrder(): Promise<any> {
+		const link = document.createElement('a')
+
+		link.setAttribute('href',`${url}/api/download`)
+		link.setAttribute('download','order.docx')
+		document.body.appendChild(link)
+		link.click()
+		document.body.removeChild(link)
 		// return await this.post('/price-list', data)
 		return await new Promise((resolve) => resolve(true));
 	}
