@@ -5,12 +5,11 @@ import { ListItem } from "@/types/ui";
 
 export class LibrarianApi extends Api {
 	static async getRequestList(companyName: ListItem | null): Promise<PublicationFullInfo[]> {
-		// return await this.get('/price-list', companyName)
-		return await this.get('/requests', companyName) as Promise<PublicationFullInfo[]>
-		// return await new Promise((resolve) => resolve(getAllOrders()));
+		return await this.get('/all_requests', companyName) as Promise<PublicationFullInfo[]>
 	}
 
-	static async getOrderList(): Promise<PublicationFullInfo[]> {
+	static async getOrderList(status: PublicationStatus ): Promise<PublicationFullInfo[]> {
+		// return await this.get('/all_requests', status) as Promise<PublicationFullInfo[]>;
 		return await new Promise((resolve) => resolve(getAllOrders()));
 	}
 

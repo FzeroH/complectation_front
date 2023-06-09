@@ -15,15 +15,15 @@
         <publicate-card :is-large="false" :item="order" />
         <footer class="d-flex justify-content-end">
           <template v-if="order.status === statusInProcessing">
-            <input type="button" value="Принять" class="btn btn-success" />
-            <input type="button" value="Отклонить" class="btn btn-danger ms-2" />
+            <input type="button" value="Принять" class="btn btn-success" @click="updateStatus(order, STATUS_ACCEPTED)"/>
+            <input type="button" value="Отклонить" class="btn btn-danger ms-2" @click="updateStatus(order, STATUS_REFUSED)"/>
           </template>
           <input
             v-else-if="order.status === statusAccepted"
             type="button"
             value="Добавить в заказ"
             class="btn btn-dark"
-            @click="updateStatus(order.id)"
+            @click="updateStatus(order, STATUS_ORDER)"
           />
         </footer>
       </article>
@@ -33,7 +33,7 @@
 
 <script setup lang="ts">
 import { LibrarianApi } from '@/api'
-import { STATUS_ACCEPTED, STATUS_IN_PROCESSING } from '@/const'
+import {STATUS_ACCEPTED, STATUS_DONE, STATUS_IN_PROCESSING, STATUS_ORDER, STATUS_REFUSED} from '@/const'
 import { PublicationFullInfo, PublicationStatus } from '@/types'
 import { ref, computed } from 'vue'
 import CustomSelect from '@/ui/select/CustomSelect.vue'
@@ -60,11 +60,12 @@ async function updateData() {
   orders.value = await LibrarianApi.getRequestList(selectedCompany.value)
 }
 
-async function updateStatus({ id, status }: PublicationFullInfo) {
+async function updateStatus(order: PublicationFullInfo, status:PublicationStatus) {
   isLoading.value = true
-  await LibrarianApi.changeStatus(id, status)
+  await LibrarianApi.changeStatus(order.id, status)
   await updateData()
   isLoading.value = false
+  // console.log(`id:${order.id} status:${status}`)
 }
 
 ;(async () => {

@@ -6,7 +6,6 @@
     <section v-for="order in orders" :key="order.id" class="text-dark mb-4">
       <article class="libr__article p-1 bg-light">
         <publicate-card :is-large="false" :item="order" />
-
         <footer class="d-flex justify-content-end">
           <input
             type="button"
@@ -35,6 +34,7 @@ import { ref, computed } from 'vue'
 
 import CustomLoader from '@/ui/loader/CustomLoader.vue'
 import PublicateCard from '@/components/PublicateCard.vue'
+import {STATUS_ORDER} from "@/const";
 
 const isLoading = ref<boolean>(true)
 const orders = ref<PublicationFullInfo[]>([])
@@ -44,7 +44,8 @@ const totalPrice = computed<number>(() =>
 )
 
 async function updateData() {
-  orders.value = await LibrarianApi.getOrderList()
+  orders.value = await LibrarianApi.getOrderList(STATUS_ORDER)
+  isLoading.value = false
 }
 
 async function updateStatus({ id, status }: PublicationFullInfo) {
