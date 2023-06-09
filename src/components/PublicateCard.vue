@@ -1,6 +1,6 @@
 <template>
   <h2>{{ publicateItem.publication_title }}</h2>
-
+  <span :class="statusClass" class="fw-weight-bold ms-3 fs-5">{{ publicateItem.status }}</span>
   <div class="container">
     <div :class="props.isLarge ? '' : 'row'">
       <div class="col d-flex">
@@ -42,6 +42,8 @@ import CustomTable from '@/ui/table/CustomTable.vue'
 import { PublicationFullInfo } from '@/types'
 import { defineProps, computed } from 'vue'
 import { TableHeader, TableItem } from '@/types/ui'
+import { STATUS_ACCEPTED, STATUS_ORDER, STATUS_REFUSED,
+  STATUS_DONE, STATUS_IN_PROCESSING, STATUS_PUBLISHING } from '@/const'
 
 const props = defineProps<{
   isLarge: boolean
@@ -76,4 +78,34 @@ const headers = computed<TableHeader[]>(() => [
 const tableItems = computed<TableItem[]>(() =>
   publicateItem.value?.recommend_list?.map((item, index) => ({ ...item, id: index })),
 )
+
+const statusClass = computed<unknown>(()=>({
+  ...publicateItem.value.status === STATUS_DONE && { 'status-done': true },
+  ...publicateItem.value.status === STATUS_ORDER && { 'status-order': true },
+  ...publicateItem.value.status === STATUS_REFUSED && { 'status-refused': true },
+  ...publicateItem.value.status === STATUS_PUBLISHING && { 'status-publishing': true },
+  ...publicateItem.value.status === STATUS_ACCEPTED && { 'status-accepted': true },
+  ...publicateItem.value.status === STATUS_IN_PROCESSING && { 'status-in-processing': true }
+}))
 </script>
+
+<style>
+.status-done {
+  color: #9E9E9E;
+}
+.status-order {
+  color: #673AB7;
+}
+.status-refused {
+  color: #F44336;
+}
+.status-publishing {
+  color: #2196F3;
+}
+.status-accepted {
+  color: #4CAF50;
+}
+.status-in-processing {
+  color: #FFC107;
+}
+</style>
