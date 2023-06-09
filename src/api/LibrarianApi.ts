@@ -8,9 +8,8 @@ export class LibrarianApi extends Api {
 		return await this.get('/all_requests', companyName) as Promise<PublicationFullInfo[]>
 	}
 
-	static async getOrderList(status: PublicationStatus ): Promise<PublicationFullInfo[]> {
-		// return await this.get('/all_requests', status) as Promise<PublicationFullInfo[]>;
-		return await new Promise((resolve) => resolve(getAllOrders()));
+	static async getOrderList(status: PublicationStatus): Promise<PublicationFullInfo[]> {
+		return await this.get('/all_requests', {status}) as Promise<PublicationFullInfo[]>;
 	}
 
 	static async getCompanyNames(): Promise<ListItem[]> {
@@ -21,16 +20,18 @@ export class LibrarianApi extends Api {
 		return await this.post('/file/upload', data)
 	}
 
-	static async formAnOrder(): Promise<any> {
+	static async formAnOrder(data: any): Promise<any> {
+		return await this.post('/create_order', data)
+	}
+
+	static async downloadOrderDocument(id: number): Promise<any> {
 		const link = document.createElement('a')
 
-		link.setAttribute('href',`${url}/api/download`)
+		link.setAttribute('href',`${url}/api/document/download?order_id=${id}`)
 		link.setAttribute('download','order.docx')
 		document.body.appendChild(link)
 		link.click()
 		document.body.removeChild(link)
-		// return await this.post('/price-list', data)
-		return await new Promise((resolve) => resolve(true));
 	}
 
 	static async changeStatus(orderId: number, status: PublicationStatus): Promise<any> {

@@ -11,7 +11,7 @@
             type="button"
             value="Убрать  из заказа"
             class="btn btn-danger"
-            @click="updateStatus(order)"
+            @click="updateStatus(order, STATUS_ACCEPTED)"
           />
         </footer>
       </article>
@@ -29,12 +29,12 @@
 
 <script setup lang="ts">
 import { LibrarianApi } from '@/api'
-import { PublicationFullInfo } from '@/types'
+import {PublicationFullInfo, PublicationStatus} from '@/types'
 import { ref, computed } from 'vue'
 
 import CustomLoader from '@/ui/loader/CustomLoader.vue'
 import PublicateCard from '@/components/PublicateCard.vue'
-import {STATUS_ORDER} from "@/const";
+import {STATUS_ACCEPTED, STATUS_ORDER} from "@/const";
 
 const isLoading = ref<boolean>(true)
 const orders = ref<PublicationFullInfo[]>([])
@@ -45,25 +45,33 @@ const totalPrice = computed<number>(() =>
 
 async function updateData() {
   orders.value = await LibrarianApi.getOrderList(STATUS_ORDER)
-  isLoading.value = false
 }
 
-async function updateStatus({ id, status }: PublicationFullInfo) {
+async function updateStatus(order: PublicationFullInfo, status: PublicationStatus) {
   isLoading.value = true
-  await LibrarianApi.changeStatus(id, status)
+  await LibrarianApi.changeStatus(order.id, status)
   await updateData()
   isLoading.value = false
 }
 
 async function apply() {
   isLoading.value = true
-  await LibrarianApi.formAnOrder()
-  await updateData()
+  const ordersIds = orders.value.map(order => order.id);
+  const data = {
+    order_ids: ordersIds,
+    total_price: totalPrice.value,
+  }
+  const id = await LibrarianApi.formAnOrder(data);
+  await LibrarianApi.downloadOrderDocument(id.finaly_request_id);
+  await updateData();
   isLoading.value = false
+
+
 }
 
 ;(async () => {
   await updateData()
+  console.log(orders.value)
   isLoading.value = false
 })()
 </script>
