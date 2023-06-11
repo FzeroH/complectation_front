@@ -1,6 +1,7 @@
 import {OrdersFullInfo, PublicationFullInfo, PublicationStatus} from "@/types";
 import {Api, url} from "./Api";
 import { ListItem } from "@/types/ui";
+import axios from "axios";
 
 export class LibrarianApi extends Api {
 	static async getRequestList(companyName: ListItem | null): Promise<PublicationFullInfo[]> {
@@ -30,9 +31,9 @@ export class LibrarianApi extends Api {
 				Accept: 'application/json',
 			},
 			withCredentials: true,
-			timeout: 30000,
+			timeout: 600000,
 			};
-		return await this.post('/document/upload', data, config)
+		return await axios.post('http://localhost:8000/api/file/upload', data, config)
 	}
 
 	static async formAnOrder(data: any): Promise<any> {
