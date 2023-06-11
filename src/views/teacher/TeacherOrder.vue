@@ -148,12 +148,15 @@ import CustomSelect from '@/ui/select/CustomSelect.vue'
 import { TeacherApi } from '@/api'
 import { ListItem } from '@/types/ui'
 import { CreateOrderRequest, RecommendItem } from '@/types'
+import { useRouter } from 'vue-router';
 
 const props = defineProps<{
   id: string
 }>()
 
 const isLoading = ref(true)
+
+const router = useRouter();
 
 const cafedra_name = ref('')
 const publication_author = ref('')
@@ -243,7 +246,7 @@ function removeRow(index: number) {
   recommendList.value.splice(index, 1)
 }
 
-function apply() {
+async function apply() {
   if (canApply.value) {
     hasApply.value = true
 
@@ -256,7 +259,9 @@ function apply() {
         .map((item) => +item.discipline!.value),
     }
 
-    TeacherApi.createOrder(items)
+    await TeacherApi.createOrder(items)
+
+    await router.push('/teacher')
   }
 }
 

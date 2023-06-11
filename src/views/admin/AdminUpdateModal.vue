@@ -51,7 +51,7 @@
           <footer class="d-flex justify-content-end align-items-center">
             <input
               type="submit"
-              value="Изменить"
+              :value="isCreating? 'Добавить' : 'Изменить'"
               class="btn btn-primary"
               :disabled="!hasUpdated"
               @click="apply"
