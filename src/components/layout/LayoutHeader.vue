@@ -49,6 +49,7 @@ const librarianRoutes = computed<HeaderRoute[]>(() =>
   userStore.isLibrarian
     ? [
         { title: 'Список', to: '/librarian' },
+        { title: 'История заявок', to: '/orders-history' },
         { title: 'Прайс-лист', to: '/price-list' },
         { title: 'Заказ', to: '/order' },
       ]

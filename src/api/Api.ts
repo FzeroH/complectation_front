@@ -27,7 +27,7 @@ export class Api {
         });
     }
 
-    static post(url: string, data: any) {
+    static post(url: string, data: any, config?: any) {
         return new Promise((resolve, reject) => {
             axios
                 .post(url, data, config)

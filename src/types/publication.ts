@@ -71,6 +71,21 @@ export type PublicationFullInfo = {
   recommend_list: FullRecommendItem[]
 }
 
+export type OrdersFullInfo = {
+  id: number
+  finaly_request_id: number
+  status: PublicationStatus
+  cafedra_name: string
+  publication_author: string
+  publication_title: string
+  company_name: string
+  publication_year: number
+  request_count: number
+  total_cost: number
+  date: Date
+
+}
+
 export type CreateOrderRequest = {
   pub_type_id: number
   publication_id: number

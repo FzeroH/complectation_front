@@ -8,6 +8,7 @@ import LibrarianTable from '@/views/librarian/LibrarianTable.vue'
 import PriceList from '@/views/librarian/PriceList.vue'
 import OrderList from '@/views/librarian/OrderList.vue'
 import AdminMain from '@/views/admin/AdminMain.vue'
+import OrderHistoryList from '@/views/librarian/OrderHistoryList.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,6 +57,11 @@ const router = createRouter({
           path: '/order',
           name: 'order-list',
           component: OrderList,
+        },
+        {
+          path: '/orders-history',
+          name: 'orders-history',
+          component: OrderHistoryList,
         },
 
         {
