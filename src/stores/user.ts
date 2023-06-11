@@ -50,8 +50,8 @@ export const useUserStore = defineStore('user', () => {
 			const token = sessionUser.token;
 
 			if (token) {
-                foundedUser = await UserApi.getUser()
-                foundedUser.token = token
+                foundedUser = await UserApi.getUser().catch(() => null)
+                if(foundedUser) foundedUser.token = token
             };
 		}
     }
