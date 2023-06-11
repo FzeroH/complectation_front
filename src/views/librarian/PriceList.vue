@@ -39,7 +39,7 @@
           </defs>
         </svg>
 
-        <h2>Вставить файл</h2>
+        <h2>{{ inputFileName }}</h2>
       </label>
 
       <input
@@ -48,11 +48,12 @@
         id="formFile"
         accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
         name="file"
+        @input="inputFile"
       />
     </div>
 
     <footer class="d-flex justify-content-end">
-      <input type="submit" value="Загрузить" class="btn btn-light" />
+      <input type="submit" value="Загрузить" class="btn btn-light" :disabled="disabledFileInput"/>
     </footer>
   </form>
 </template>
@@ -62,15 +63,27 @@ import { ref } from 'vue'
 import CustomSelect from '@/ui/select/CustomSelect.vue'
 import { ListItem } from '@/types/ui'
 import { LibrarianApi } from '@/api'
+import CustomLoader from '@/ui/loader/CustomLoader.vue';
 
 const company_name = ref<ListItem | null>(null)
 const company_names = ref<ListItem[]>([])
 const isLoading = ref<boolean>(true)
 const form = ref<HTMLFormElement | null>(null)
-
+const inputFileName = ref<string>('Вставить файл')
+const disabledFileInput = ref<boolean>(false)
 async function apply() {
-  console.log('apply', new FormData(form.value!).get('file'))
+  disabledFileInput.value = true
+  isLoading.value = true
+
   await LibrarianApi.savePriceList(new FormData(form.value!))
+
+  isLoading.value = false
+  disabledFileInput.value = false
+
+}
+
+async function inputFile(e)  {
+  inputFileName.value = e.target.files[0].name;
 }
 
 ;(async () => {
